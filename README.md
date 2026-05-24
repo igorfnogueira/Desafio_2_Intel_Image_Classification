@@ -31,7 +31,6 @@ O notebook `intel_image_classification.ipynb` monta um fluxo completo em **PyTor
 2. Siga o [INSTALACAO.md](INSTALACAO.md) para criar o `.venv` e instalar as dependências.
 3. Abra o notebook no Jupyter/VS Code, selecione o kernel do ambiente virtual e execute as células em ordem (**Run All** recomendado na primeira vez).
 
-
 ## Requisitos
 
 - Python 3.11 ou 3.12

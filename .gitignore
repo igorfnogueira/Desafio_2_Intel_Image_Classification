@@ -5,6 +5,7 @@ __pycache__/
 .ipynb_checkpoints/
 *.egg-info/
 .DS_Store
+.env
 
 # Dataset (baixar do Kaggle — ver README)
 seg_train/

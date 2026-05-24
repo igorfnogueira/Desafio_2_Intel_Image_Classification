@@ -1,0 +1,16 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.egg-info/
+.DS_Store
+
+# Dataset (baixar do Kaggle — ver README)
+seg_train/
+seg_test/
+seg_pred/
+
+# Scripts temporários de extração
+_extract*.py
+_extracted*.txt

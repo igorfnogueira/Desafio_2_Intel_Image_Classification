@@ -1,0 +1,12 @@
+# Intel Image Classification — dependências (exceto PyTorch)
+# Instale PyTorch+CUDA ANTES deste arquivo (veja INSTALACAO.md)
+
+pandas>=2.1.0
+numpy>=1.26.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+scikit-learn>=1.4.0
+
+# Notebook / kernel no VS Code e Cursor
+ipykernel>=6.29.0
+jupyter>=1.0.0

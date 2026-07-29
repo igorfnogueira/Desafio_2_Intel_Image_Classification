@@ -5,13 +5,35 @@ __pycache__/
 .ipynb_checkpoints/
 *.egg-info/
 .DS_Store
+
+# Secrets / credenciais (nunca versionar)
 .env
+.env.*
+!.env.example
+kaggle.json
+.kaggle/
 
 # Dataset (baixar do Kaggle — ver README)
 seg_train/
 seg_test/
 seg_pred/
+*.zip
+
+# Checkpoints / pesos de modelo
+*.pt
+*.pth
+*.ckpt
+*.onnx
+runs/
+checkpoints/
+weights/
+models_saved/
 
 # Scripts temporários de extração
 _extract*.py
 _extracted*.txt
+
+# Notas/auditorias locais (não publicar)
+arquivo.md
+audit_resume.md
+*_audit*.md

@@ -1,60 +1,62 @@
-# Intel Image Classification
+# Intel Image Classification (Computer Vision)
 
-Projeto de **Visão Computacional** para classificar imagens de cenas em **6 categorias** (`buildings`, `forest`, `glacier`, `mountain`, `sea`, `street`), usando o dataset [Intel Image Classification (Kaggle)](https://www.kaggle.com/datasets/puneet6060/intel-image-classification).
+Language / Idioma: **English** | [Português](README.pt-br.md)
 
-## O que o projeto faz
+Computer Vision project that classifies natural and urban scene images into **6 categories** (`buildings`, `forest`, `glacier`, `mountain`, `sea`, `street`), using the [Intel Image Classification (Kaggle)](https://www.kaggle.com/datasets/puneet6060/intel-image-classification) dataset.
 
-O notebook [`intel_image_classification.ipynb`](intel_image_classification.ipynb) monta um fluxo completo em **PyTorch** (com suporte a GPU/CUDA):
+## What the project does
 
-1. Carrega e explora os dados (`seg_train` / `seg_test`)
-2. Normaliza as imagens e aplica **data augmentation** só no treino
-3. Treina três CNNs com complexidade crescente:
-   - **Baseline** — rede simples de referência
-   - **VGG-like** — mais profunda, com BatchNorm
-   - **AdvancedIntelCNN** — arquitetura híbrida (stem + blocos VGG + residuais)
-4. Compara os modelos, escolhe o melhor pela validação e avalia no teste (matriz de confusão e erros)
+The [`intel_image_classification.ipynb`](intel_image_classification.ipynb) notebook builds a complete **PyTorch** pipeline (with GPU/CUDA support):
 
-## Resultados (execução salva no notebook)
+1. Loads and explores the data (`seg_train` / `seg_test`)
+2. Normalizes images and applies **data augmentation** only on the training split
+3. Trains three CNNs of increasing complexity:
+   - **Baseline** — simple reference network
+   - **VGG-like** — deeper, with BatchNorm
+   - **AdvancedIntelCNN** — hybrid architecture (stem + VGG blocks + residual blocks)
+4. Compares the models, picks the best one on validation, and evaluates it on the test set (confusion matrix and error analysis)
 
-Modelo selecionado pela validação: **AdvancedIntelCNN**.
+## Results (saved run in the notebook)
 
-| Modelo | Parâmetros | Acc. validação | Acc. teste |
-|--------|------------|----------------|------------|
-| **Advanced** | 14.360.390 | **87,42%** | **87,33%** |
-| Baseline | 10.711.878 | 86,24% | 85,84% |
-| VGG-like | 4.822.086 | 85,07% | 84,14% |
+Model selected on validation: **AdvancedIntelCNN**.
 
-- Dataset rotulado: **17.034** imagens (14.034 treino + 3.000 teste), 6 classes
-- Split interno do treino: 11.929 treino / 2.105 validação (`VAL_RATIO=0.15`, `SEED=42`)
-- Melhor F1 por classe (teste): **forest 0,971** · menor: **glacier 0,828**
-- Principais confusões: `buildings→street`, `glacier↔mountain`
+| Model | Parameters | Val. acc. | Test acc. |
+|-------|------------|-----------|-----------|
+| **Advanced** | 14,360,390 | **87.42%** | **87.33%** |
+| Baseline | 10,711,878 | 86.24% | 85.84% |
+| VGG-like | 4,822,086 | 85.07% | 84.14% |
 
-### Onde ver o projeto funcionando
+- Labeled dataset: **17,034** images (14,034 train + 3,000 test), 6 classes
+- Internal train split: 11,929 train / 2,105 validation (`VAL_RATIO=0.15`, `SEED=42`)
+- Best per-class F1 (test): **forest 0.971** · lowest: **glacier 0.828**
+- Main confusions: `buildings→street`, `glacier↔mountain`
 
-Abra o notebook com os **outputs já salvos** (gráficos e métricas embutidos):
+### Where to see it working
 
-| Conteúdo | Onde olhar no notebook |
-|----------|-------------------------|
-| Distribuição e amostras das classes | Fases 1–2 |
-| Data augmentation | Fase 3 |
-| Curvas de loss/acurácia por modelo | Fases 4–6 |
-| Comparação dos 3 modelos | Fase 7 |
-| Matriz de confusão e erros | Fase 8 |
-| Síntese quantitativa | Fase 9 |
+Open the notebook with the **outputs already saved** (charts and metrics embedded):
 
-> Os pesos não são salvos em disco: para reproduzir o treino do zero, execute as células em ordem (GPU recomendada).
+| Content | Where to look in the notebook |
+|---------|-------------------------------|
+| Class distribution and samples | Phases 1–2 |
+| Data augmentation | Phase 3 |
+| Loss/accuracy curves per model | Phases 4–6 |
+| Comparison of the 3 models | Phase 7 |
+| Confusion matrix and errors | Phase 8 |
+| Quantitative summary | Phase 9 |
 
-## Como baixar o dataset
+> Weights are not saved to disk: to reproduce training from scratch, run the cells in order (GPU recommended).
 
-Fonte oficial: **[Intel Image Classification — Kaggle](https://www.kaggle.com/datasets/puneet6060/intel-image-classification)**
+## How to download the dataset
 
-Você precisa de **`seg_train`** e **`seg_test`**. A pasta **`seg_pred`** (sem rótulo) é opcional e não é usada no notebook atual.
+Official source: **[Intel Image Classification — Kaggle](https://www.kaggle.com/datasets/puneet6060/intel-image-classification)**
 
-### Opção 1 — Pelo site
+You need **`seg_train`** and **`seg_test`**. The unlabeled **`seg_pred`** folder is optional and not used in the current notebook.
 
-1. Acesse o link do dataset e faça login na [Kaggle](https://www.kaggle.com/).
-2. Clique em **Download** e extraia o `.zip`.
-3. Copie **`seg_train`** e **`seg_test`** para a raiz deste repositório (mesmo nível do notebook).
+### Option 1 — Via the website
+
+1. Go to the dataset link and log in to [Kaggle](https://www.kaggle.com/).
+2. Click **Download** and extract the `.zip`.
+3. Copy **`seg_train`** and **`seg_test`** to the root of this repository (same level as the notebook).
 
 ```
 seg_train/
@@ -74,40 +76,97 @@ seg_test/
 └── street/
 ```
 
-### Opção 2 — Kaggle API
+### Option 2 — Kaggle API
 
 1. `pip install kaggle`
-2. Gere um token em [Kaggle → Settings → API](https://www.kaggle.com/settings) e salve `kaggle.json` em:
+2. Generate a token at [Kaggle → Settings → API](https://www.kaggle.com/settings) and save `kaggle.json` at:
    - **Windows:** `%USERPROFILE%\.kaggle\kaggle.json`
    - **Linux/macOS:** `~/.kaggle/kaggle.json`
-3. Na pasta do projeto:
+3. From the project folder:
 
 ```powershell
 kaggle datasets download -d puneet6060/intel-image-classification
 ```
 
-4. Extraia o zip e mova `seg_train` e `seg_test` para a raiz.
+4. Extract the zip and move `seg_train` and `seg_test` to the repo root.
 
-> **Importante:** dataset e `kaggle.json` **não** vão para o Git (`.gitignore`). Nunca versionar o token da Kaggle.
+> **Important:** the dataset and `kaggle.json` are **not** committed to Git (`.gitignore`). Never version your Kaggle token.
 
-## Estrutura do repositório
+## Repository structure
 
 ```
-├── intel_image_classification.ipynb   # pipeline + resultados salvos
+├── intel_image_classification.ipynb   # pipeline + saved results
 ├── requirements.txt
-├── INSTALACAO.md                      # ambiente virtual e PyTorch/CUDA
-├── README.md
-├── seg_train/                         # local (ignorado pelo Git)
-└── seg_test/                          # local (ignorado pelo Git)
+├── README.md                          # this file (English)
+├── README.pt-br.md                    # Portuguese version
+├── seg_train/                         # local (ignored by Git)
+└── seg_test/                          # local (ignored by Git)
 ```
 
-## Como rodar
+## Installation
 
-1. Baixe o dataset conforme a seção acima.
-2. Siga o [INSTALACAO.md](INSTALACAO.md) para criar o `.venv` e instalar as dependências.
-3. Abra `intel_image_classification.ipynb`, selecione o kernel do `.venv` e execute as células em ordem (**Run All** na primeira vez).
+Recommended environment: **Python 3.11 or 3.12** (avoid 3.14 for deep learning projects until the ecosystem is stable).
 
-## Requisitos
+Reference GPU for this project: **NVIDIA GeForce RTX 4060 Ti** (CUDA 12.x). Any recent CUDA-capable NVIDIA GPU also works; without a GPU, training runs on CPU (slower).
 
-- Python 3.11 ou 3.12
-- GPU NVIDIA com CUDA (opcional, mas recomendado para treino)
+1. Open a terminal in the project folder.
+2. Create the virtual environment:
+   ```powershell
+   py -3.12 -m venv .venv
+   ```
+   If you don't have 3.12: `py -3.11 -m venv .venv` or `py -3 -m venv .venv`.
+3. Activate it:
+   ```powershell
+   .\.venv\Scripts\Activate.ps1
+   ```
+   If PowerShell blocks scripts, for this terminal session only:
+   ```powershell
+   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+   ```
+4. Upgrade pip:
+   ```powershell
+   python -m pip install --upgrade pip
+   ```
+5. Install PyTorch with CUDA (recommended for NVIDIA GPUs), using the official index for **CUDA 12.4**:
+   ```powershell
+   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+   ```
+   CUDA 12.6 alternative (if the command above fails or NVIDIA recommends a newer driver):
+   ```powershell
+   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+   ```
+   CPU-only install: follow the CPU options at [pytorch.org/get-started/locally](https://pytorch.org/get-started/locally/).
+6. Install the remaining dependencies:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+7. (Optional) Register the Jupyter kernel:
+   ```powershell
+   python -m ipykernel install --user --name=intel-image-venv --display-name "Intel Image Classification (.venv)"
+   ```
+8. Verify the GPU:
+   ```powershell
+   python -c "import torch; print('PyTorch', torch.__version__); print('CUDA', torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU only')"
+   ```
+9. In `intel_image_classification.ipynb`, select the kernel: **Select Kernel** → **Python Environments** → `.venv (Python 3.x)` in this project's folder.
+
+### Troubleshooting
+
+| Problem | Action |
+|---------|--------|
+| `CUDA False` | Reinstall step 5 with `cu124`; update the NVIDIA driver. |
+| `No module named torch` | Activate the `.venv` before `pip install`. |
+| Wrong kernel in the notebook | Explicitly select this folder's `.venv`. |
+
+Official docs: [https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/)
+
+## How to run
+
+1. Download the dataset as described above.
+2. Follow the **Installation** section to create the `.venv` and install dependencies.
+3. Open `intel_image_classification.ipynb`, select the `.venv` kernel, and run the cells in order (**Run All** on the first run).
+
+## Requirements
+
+- Python 3.11 or 3.12
+- NVIDIA GPU with CUDA (optional, but recommended for training)
